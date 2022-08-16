@@ -1,38 +1,29 @@
 import PropTypes from 'prop-types';
 import { Modal } from 'components/Modal/Modal';
-import { Component } from 'react';
+import { useState } from 'react';
 import css from './ImageGalleryItem.module.css';
 
-export class ImageGalleryItem extends Component {
-  state = {
-    showModal: false,
-  };
+export const ImageGalleryItem = ({ id, webformatURL, largeImageURL }) => {
+  const [showModal, setShowModal] = useState(false);
 
-  handleItemClick = e => {
+  const handleItemClick = e => {
     if (e.target.nodeName === 'IMG') {
-      this.setState({ showModal: true });
+      setShowModal(true);
     }
   };
 
-  hideModal = () => {
-    this.setState({ showModal: false });
-  };
+  return (
+    <>
+      <li className={css.gallery_item} onClick={handleItemClick}>
+        <img src={webformatURL} alt={id} />
+      </li>
 
-  render() {
-    const { id, webformatURL, largeImageURL } = this.props;
-    const { showModal } = this.state;
-
-    return (
-      <>
-        <li className={css.gallery_item} onClick={this.handleItemClick}>
-          <img src={webformatURL} alt={id} />
-        </li>
-
-        {showModal && <Modal src={largeImageURL} onClose={this.hideModal} />}
-      </>
-    );
-  }
-}
+      {showModal && (
+        <Modal src={largeImageURL} onClose={() => setShowModal(false)} />
+      )}
+    </>
+  );
+};
 
 ImageGalleryItem.propTypes = {
   id: PropTypes.number.isRequired,
