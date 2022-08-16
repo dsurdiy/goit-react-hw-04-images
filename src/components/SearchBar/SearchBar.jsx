@@ -4,8 +4,8 @@ import css from './SearchBar.module.css';
 import { FcSearch } from 'react-icons/fc';
 
 export const SearchBar = ({ onSubmit }) => {
-  const handleFormSubmit = values => {
-    onSubmit(values);
+  const handleFormSubmit = ({ searchQuery }) => {
+    onSubmit(searchQuery);
   };
 
   return (
